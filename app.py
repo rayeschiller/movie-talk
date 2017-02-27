@@ -10,6 +10,7 @@ from urllib.error import HTTPError
 
 import json
 import os
+import datetime
 
 from flask import Flask
 from flask import request
@@ -69,6 +70,8 @@ def makeWebhookResult(data):
 #        return {}
 
     date = data.get('release_date')
+    datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%m/%d/%y')
+    
     if date is None:
         return {}
         
