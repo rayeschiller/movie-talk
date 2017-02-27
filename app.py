@@ -70,7 +70,7 @@ def makeWebhookResult(data):
 #        return {}
 
     date = data.get('release_date')
-    datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%m/%d/%y')
+    date = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%m/%d/%y')
     
     if date is None:
         return {}
