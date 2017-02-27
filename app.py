@@ -39,29 +39,28 @@ def webhook():
 def processRequest(req):
     if req.get("result").get("action") != "movieReleaseDate":
         return {}
-    baseurl = "https://api.themoviedb.org/3/movie/550?api_key=9fe2fdf8fcbeeb11ecec17e5e4f0276a"
-#    yql_query = makeYqlQuery(req)
-#    if yql_query is None:
-#        return {}
-#    yql_url = baseurl + urlencode({'q': yql_query}) + "&format=json"
-#    print(yql_url)
-    print(baseurl)
-    result = urlopen(baseurl).read()
+    baseurl = "https://api.themoviedb.org/3/search/movie?api_key=9fe2fdf8fcbeeb11ecec17e5e4f0276a&query="
+    yql_query = makeYqlQuery(req)
+    if yql_query is None:
+        return {}
+    yql_url = baseurl + yql_query
+    print(yql_url)
+#    print(baseurl)
+    result = urlopen(yql_url).read()
     data = json.loads(result)
     res = makeWebhookResult(data)
     return res
 
-#
-#def makeYqlQuery(req):
-#    result = req.get("result")
-#    parameters = result.get("parameters")
-#    city = parameters.get("geo-city")
-#
-#    if city is None:
-#        return None
-#        
-#
-#    return "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text='" + city + "')"
+
+def makeYqlQuery(req):
+    result = req.get("result")
+    parameters = result.get("parameters")
+    title = parameters.get("title")
+
+    if title is None:
+        return None
+    
+    return title
 
 
 def makeWebhookResult(data):
