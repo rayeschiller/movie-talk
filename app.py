@@ -38,13 +38,13 @@ def webhook():
 def processRequest(req):
     if req.get("result").get("action") != "yahooWeatherForecast":
         return {}
-    baseurl = "https://query.yahooapis.com/v1/public/yql?"
+    baseurl = "https://api.themoviedb.org/3/movie/550?api_key=9fe2fdf8fcbeeb11ecec17e5e4f0276a"
     yql_query = makeYqlQuery(req)
     if yql_query is None:
         return {}
     yql_url = baseurl + urlencode({'q': yql_query}) + "&format=json"
     print(yql_url)
-    result = urlopen(yql_url).read()
+    result = urlopen(baseurl).read()
     data = json.loads(result)
     res = makeWebhookResult(data)
     return res
@@ -63,33 +63,38 @@ def makeYqlQuery(req):
 
 
 def makeWebhookResult(data):
-    query = data.get('query')
-    if query is None:
+#    query = data.get('query')
+#    if query is None:
+#        return {}
+
+    date = data.get('release_date')
+    if date is None:
+        return {}
+        
+    title = data.get('title')
+    if title is None:
         return {}
 
-    result = query.get('results')
-    if result is None:
-        return {}
-
-    channel = result.get('channel')
-    if channel is None:
-        return {}
-
-    item = channel.get('item')
-    location = channel.get('location')
-    units = channel.get('units')
-    if (location is None) or (item is None) or (units is None):
-        return {}
-
-    condition = item.get('condition')
-    if condition is None:
-        return {}
+#    channel = result.get('channel')
+#    if channel is None:
+#        return {}
+#
+#    item = channel.get('item')
+#    location = channel.get('location')
+#    units = channel.get('units')
+#    if (location is None) or (item is None) or (units is None):
+#        return {}
+#
+#    condition = item.get('condition')
+#    if condition is None:
+#        return {}
 
     # print(json.dumps(item, indent=4))
 
-    speech = "Today in " + location.get('city') + ": " + condition.get('text') + \
-             ", the temperature is " + condition.get('temp') + " " + units.get('temperature')
+#    speech = "Today in " + location.get('city') + ": " + condition.get('text') + \
+#             ", the temperature is " + condition.get('temp') + " " + units.get('temperature')
 
+    speech = "The movie " + title + " was released on " + date
     print("Response:")
     print(speech)
 
@@ -106,6 +111,5 @@ if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
 
     print("Starting app on port %d" % port)
-    print("rina")
 
     app.run(debug=False, port=port, host='0.0.0.0')
