@@ -44,9 +44,7 @@ def processRequest(req):
     if yql_query is None:
         return {}
     yql_url = baseurl + yql_query
-    logging.info("test")
     print(yql_url)
-#    print(baseurl)
     result = urlopen(yql_url).read()
     data = json.loads(result)
     res = makeWebhookResult(data)
@@ -56,11 +54,11 @@ def processRequest(req):
 def makeYqlQuery(req):
     result = req.get("result")
     parameters = result.get("parameters")
-    title = parameters.get("title")
-
+#    title = parameters.get("title")
+    title = "anastasia"
     if title is None:
         return None
-    
+
     return title
 
 
