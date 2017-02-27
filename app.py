@@ -11,6 +11,7 @@ from urllib.error import HTTPError
 import json
 import os
 import datetime
+import logging
 
 from flask import Flask
 from flask import request
@@ -18,7 +19,6 @@ from flask import make_response
 
 # Flask app should start in global layout
 app = Flask(__name__)
-
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
@@ -44,6 +44,7 @@ def processRequest(req):
     if yql_query is None:
         return {}
     yql_url = baseurl + yql_query
+    logging.info("test")
     print(yql_url)
 #    print(baseurl)
     result = urlopen(yql_url).read()
@@ -64,11 +65,11 @@ def makeYqlQuery(req):
 
 
 def makeWebhookResult(data):
-#    query = data.get('query')
-#    if query is None:
-#        return {}
+    query = data.get('results')
+    if query is None:
+        return {}
 
-    date = data.get('release_date')
+    date = query.get('release_date')
     date = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%m/%d/%Y')
     
     if date is None:
