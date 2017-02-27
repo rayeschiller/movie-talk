@@ -43,6 +43,7 @@ def processRequest(req):
     if yql_query is None:
         return {}
     yql_url = baseurl + urlencode({'q': yql_query}) + "&format=json"
+    print(yql_url)
     result = urlopen(yql_url).read()
     data = json.loads(result)
     res = makeWebhookResult(data)
@@ -52,8 +53,8 @@ def processRequest(req):
 def makeYqlQuery(req):
     result = req.get("result")
     parameters = result.get("parameters")
-#    city = parameters.get("geo-city")
-    city = "new york"
+    city = parameters.get("geo-city")
+
     if city is None:
         return None
         
