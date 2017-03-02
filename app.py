@@ -83,8 +83,8 @@ def makeWebhookResult(data):
     title = data.get('title')
     if title is None:
         return {}
-    budget = data.get('budget')
-    if budget is None:
+    popularity = data.get('popularity')
+    if popularity is None:
         return {}
         
     date = data.get('release_date')
@@ -101,7 +101,7 @@ def makeWebhookResult(data):
        
 #       
 #     speech = "The movie " + da + " was released on " + date
-    speech = "The movie " + title + " had a budget that was " + budget
+    speech = "The movie " + title + " had a popularity that was " + popularity
     print("Response:")
     print(speech)
     
