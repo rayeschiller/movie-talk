@@ -44,7 +44,7 @@ def processRequest(req):
     if req.get("result").get("action") != "movieReleaseDate":
         return {}
   
-    baseurl = "https://api.themoviedb.org/3/search/movie?api_key=9fe2fdf8fcbeeb11ecec17e5e4f0276a&query=Jack+Reacher"
+    baseurl = "https://api.themoviedb.org/3/movie/550?api_key=9fe2fdf8fcbeeb11ecec17e5e4f0276a"
 #    yql_query = makeYqlQuery(req)
 #    if yql_query is None:
 #        return {}
@@ -69,43 +69,32 @@ def makeYqlQuery(req):
 
 
 def makeWebhookResult(data):
-    results = data.get('results')
-    if results is None:
-        return {}
-
-    date = results.get('release_date')
-    date = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%m/%d/%Y')
-    if date is None:
-        return {}
-        
-    title = results.get('title')
-    if title is None:
-        return {}
-
-#    channel = result.get('channel')
-#    if channel is None:
+#    results = data.get('results')
+#    if results is None:
 #        return {}
 #
-#    item = channel.get('item')
-#    location = channel.get('location')
-#    units = channel.get('units')
-#    if (location is None) or (item is None) or (units is None):
+#    date = results.get('release_date')
+#    date = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%m/%d/%Y')
+#    if date is None:
 #        return {}
-#
-#    condition = item.get('condition')
-#    if condition is None:
+#        
+#    title = results.get('title')
+#    if title is None:
 #        return {}
 
-    # print(json.dumps(item, indent=4))
+     date = data.get('release_date')
+     if date is None:
+         return {}
+         
+     title = data.get('title')
+     if title is None:
+         return {}
+         
+     speech = "The movie " + title + " was released on " + date
+     print("Response:")
+     print(speech)
 
-#    speech = "Today in " + location.get('city') + ": " + condition.get('text') + \
-#             ", the temperature is " + condition.get('temp') + " " + units.get('temperature')
-
-    speech = "The movie " + title + " was released on " + date
-    print("Response:")
-    print(speech)
-
-    return {
+     return {
         "speech": speech,
         "displayText": speech,
         # "data": data,
