@@ -70,7 +70,9 @@ def makeYqlQuery(req):
         return None
     return title
 
-
+"""
+    notes: For some reason, release_date, title, and tagline fields 
+"""
 def makeWebhookResult(data):
 #    results = data.get('results')
 #    if results is None:
@@ -79,11 +81,10 @@ def makeWebhookResult(data):
 #    date = data.get('release_date')
 #    if date is None:
 #        return {}
-             
     title = data.get('title')
     if title is None:
         return {}
-    popularity = data.get('popularity')
+    popularity = data.get('tagline')
     if popularity is None:
         return {}
         
@@ -101,7 +102,7 @@ def makeWebhookResult(data):
        
 #       
 #     speech = "The movie " + da + " was released on " + date
-    speech = "The movie " + title + " had a popularity that was " + popularity
+    speech = "The movie " + title + " had a tagline that was " + popularity
     print("Response:")
     print(speech)
     
