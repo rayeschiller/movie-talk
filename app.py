@@ -80,7 +80,7 @@ def makeWebhookResult(data):
 #    if date is None:
 #        return {}
              
-    title = data.get('budget')
+    title = data.get('title')
     if title is None:
         return {}
 #    date = results.get('release_date')
