@@ -71,7 +71,8 @@ def makeYqlQuery(req):
     return title
 
 """
-    notes: For some reason, release_date, title, and tagline fields 
+    notes: For some reason, release_date, title, and tagline fields work but 
+    popularity, budget, revenue do not. 
 """
 def makeWebhookResult(data):
 #    results = data.get('results')
@@ -84,7 +85,7 @@ def makeWebhookResult(data):
     title = data.get('title')
     if title is None:
         return {}
-    popularity = data.get('tagline')
+    popularity = data.get('revenue')
     if popularity is None:
         return {}
         
