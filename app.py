@@ -44,7 +44,7 @@ def processRequest(req):
     if req.get("result").get("action") != "movieReleaseDate":
         return {}
   
-    baseurl = "https://api.themoviedb.org/3/movie/550?api_key=9fe2fdf8fcbeeb11ecec17e5e4f0276a"
+    baseurl = "https://api.themoviedb.org/3/search/movie?api_key=9fe2fdf8fcbeeb11ecec17e5e4f0276a&query=Jack+Reacher"
 #    yql_query = makeYqlQuery(req)
 #    if yql_query is None:
 #        return {}
