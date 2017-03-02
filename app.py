@@ -73,7 +73,7 @@ def makeWebhookResult(data):
 #    if results is None:
 #        return {}
 
-    page = data.get('page')
+    page = data.get('total_pages')
 #    date = results.get('release_date')
 #    date = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%m/%d/%Y')
 #    if date is None:
