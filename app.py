@@ -69,10 +69,10 @@ def makeYqlQuery(req):
 
 
 def makeWebhookResult(data):
-#    results = data.get('results')
-#    if results is None:
-#        return {}
-#
+    results = data.get('results')
+    if results is None:
+        return {}
+
 #    date = results.get('release_date')
 #    date = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%m/%d/%Y')
 #    if date is None:
@@ -82,15 +82,16 @@ def makeWebhookResult(data):
 #    if title is None:
 #        return {}
 
-     date = data.get('release_date')
-     if date is None:
-         return {}
+    date = results.get('adult')
+    if date is None:
+        return {}
          
-     title = data.get('title')
-     if title is None:
-         return {}
+#     title = data.get('title')
+#     if title is None:
+#         return {}
          
-     speech = "The movie " + title + " was released on " + date
+#     speech = "The movie " + da + " was released on " + date
+     speech = "The movie "+ date
      print("Response:")
      print(speech)
 
