@@ -73,6 +73,7 @@ def makeWebhookResult(data):
     if results is None:
         return {}
 
+    page = data.get('page')
 #    date = results.get('release_date')
 #    date = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%m/%d/%Y')
 #    if date is None:
@@ -91,16 +92,16 @@ def makeWebhookResult(data):
 #         return {}
          
 #     speech = "The movie " + da + " was released on " + date
-     speech = "The movie "+ date
-     print("Response:")
-     print(speech)
+    speech = "The movie " + page
+    print("Response:")
+    print(speech)
 
-     return {
-        "speech": speech,
-        "displayText": speech,
+    return {
+       "speech": speech,
+       "displayText": speech,
         # "data": data,
         # "contextOut": [],
-        "source": "apiai-movie-db"
+       "source": "apiai-movie-db"
     }
 
 
