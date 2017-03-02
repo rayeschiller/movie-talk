@@ -76,11 +76,11 @@ def makeWebhookResult(data):
 #    if results is None:
 #        return {}
 
-    date = data.get('page')
-    if date is None:
-        return {}
+#    date = data.get('release_date')
+#    if date is None:
+#        return {}
              
-    title = data.get('title')
+    title = data.get('page')
     if title is None:
         return {}
 #    date = results.get('release_date')
@@ -96,10 +96,7 @@ def makeWebhookResult(data):
 #    if date is None:
 #        return {'didnt work'}
 #         
-#     title = data.get('title')
-#     if title is None:
-#         return {}
-#     
+#       
 #     speech = "The movie " + da + " was released on " + date
     speech = "The movie " + title
     print("Response:")
