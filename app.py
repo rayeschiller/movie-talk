@@ -43,14 +43,16 @@ def processRequest(req):
     global local_vars
     if req.get("result").get("action") != "movieReleaseDate":
         return {}
-  
-#   baseurl = "https://api.themoviedb.org/3/search/movie?api_key=9fe2fdf8fcbeeb11ecec17e5e4f0276a&query=Jack+Reacher"
-    baseurl="https://api.themoviedb.org/3/movie/550?api_key=9fe2fdf8fcbeeb11ecec17e5e4f0276a"
-#   yql_query = makeYqlQuery(req)
-#   if yql_query is None:
-#       return {}
-#   yql_url = baseurl + yql_query
-#   print(yql_url)
+      
+#   search url
+    baseurl = "https://api.themoviedb.org/3/search/movie?api_key=9fe2fdf8fcbeeb11ecec17e5e4f0276a&query=Jack+Reacher"
+#   movie database url    
+    #    baseurl="https://api.themoviedb.org/3/movie/550?api_key=9fe2fdf8fcbeeb11ecec17e5e4f0276a"
+    #   yql_query = makeYqlQuery(req)
+    #   if yql_query is None:
+    #       return {}
+    #   yql_url = baseurl + yql_query
+    #   print(yql_url)
     print(baseurl)   
     result = urlopen(baseurl).read()
     data = json.loads(result)
@@ -74,7 +76,7 @@ def makeWebhookResult(data):
 #    if results is None:
 #        return {}
 
-    date = data.get('release_date')
+    date = data.get('page')
     if date is None:
         return {}
              
