@@ -44,12 +44,12 @@ def processRequest(req):
     if req.get("result").get("action") != "movieReleaseDate":
         return {}
   
-#    baseurl = "https://api.themoviedb.org/3/search/movie?api_key=9fe2fdf8fcbeeb11ecec17e5e4f0276a&query=Jack+Reacher"
-     baseurl="https://api.themoviedb.org/3/movie/550?api_key=9fe2fdf8fcbeeb11ecec17e5e4f0276a"
-#    yql_query = makeYqlQuery(req)
-#    if yql_query is None:
-#        return {}
-#    yql_url = baseurl + yql_query
+#   baseurl = "https://api.themoviedb.org/3/search/movie?api_key=9fe2fdf8fcbeeb11ecec17e5e4f0276a&query=Jack+Reacher"
+    baseurl="https://api.themoviedb.org/3/movie/550?api_key=9fe2fdf8fcbeeb11ecec17e5e4f0276a"
+#   yql_query = makeYqlQuery(req)
+#   if yql_query is None:
+#       return {}
+#   yql_url = baseurl + yql_query
 #   print(yql_url)
     print(baseurl)   
     result = urlopen(baseurl).read()
@@ -74,9 +74,13 @@ def makeWebhookResult(data):
 #    if results is None:
 #        return {}
 
-     page = data.get('title')
-     if title is None:
-         return {}
+    date = data.get('release_date')
+    if date is None:
+        return {}
+             
+    title = data.get('title')
+    if title is None:
+        return {}
 #    date = results.get('release_date')
 #    date = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%m/%d/%Y')
 #    if date is None:
@@ -85,7 +89,7 @@ def makeWebhookResult(data):
 #    title = results.get('title')
 #    if title is None:
 #        return {}
-
+#    
 #    date = results.get('adult')
 #    if date is None:
 #        return {'didnt work'}
@@ -93,12 +97,12 @@ def makeWebhookResult(data):
 #     title = data.get('title')
 #     if title is None:
 #         return {}
-         
+#     
 #     speech = "The movie " + da + " was released on " + date
-    speech = "The movie " + page
+    speech = "The movie " + title
     print("Response:")
     print(speech)
-
+    
     return {
        "speech": speech,
        "displayText": speech,
