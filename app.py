@@ -69,9 +69,9 @@ def makeYqlQuery(req):
 
 
 def makeWebhookResult(data):
-    results = data.get('results')
-    if results is None:
-        return {}
+#    results = data.get('results')
+#    if results is None:
+#        return {}
 
     page = data.get('page')
 #    date = results.get('release_date')
@@ -83,10 +83,10 @@ def makeWebhookResult(data):
 #    if title is None:
 #        return {}
 
-    date = results.get('adult')
-    if date is None:
-        return {}
-         
+#    date = results.get('adult')
+#    if date is None:
+#        return {'didnt work'}
+#         
 #     title = data.get('title')
 #     if title is None:
 #         return {}
