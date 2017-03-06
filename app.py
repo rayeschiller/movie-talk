@@ -78,15 +78,10 @@ def makeWebhookResult(data):
 #    if date is None:
 #        return {}
 #    date = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%m/%d/%Y')
-    revenue = data.get('title')
-    if revenue is None:
-        return {}
-#    revenue = data.getInteger('revenue')
-#    if revenue is None:
-#        return {}
-   
+    arevenue = data.get('revenue')
+
 #    movieID = data['results'][0]['id']
-    speech = "The movie " + revenue
+    speech = "The movie " + arevenue
     print("Response:")
     print(speech)
     
