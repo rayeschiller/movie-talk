@@ -78,11 +78,11 @@ def makeWebhookResult(data):
 #    if results is None:
 #        return {}
     
-    if data.has('revenue'):
-        revenue = data.getString('revenue')        
-    if revenue is None:
-        return {}
-        
+#    if data.has('revenue'):
+#        revenue = data.getString('revenue')        
+#    if revenue is None:
+#        return {}
+#        
     revenue = "5"
     date = data.get('release_date')
     if date is None:
