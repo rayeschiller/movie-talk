@@ -88,7 +88,7 @@ def makeWebhookResult(data):
     return {
        "speech": speech,
        "displayText": speech,
-       "data": data.get('revenue'),
+       "data": ["revenue", data.get('revenue'), "budget", data.get('budget'), "popularity", data.get('popularity')],
        "contextOut": [],
        "source": "apiai-movie-db"
     }
