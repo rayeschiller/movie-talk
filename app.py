@@ -78,7 +78,7 @@ def makeWebhookResult(data):
 #    if date is None:
 #        return {}
 #    date = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%m/%d/%Y')
-    revenue = data.getString('title')
+    revenue = data.get('title')
     if revenue is None:
         return {}
 #    revenue = data.getInteger('revenue')
