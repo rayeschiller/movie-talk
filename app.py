@@ -57,7 +57,6 @@ def processRequest(req):
     result = urlopen(baseurl).read()
     data = json.loads(result)
     res = makeWebhookResult(data)
-    local_vars= inspect.currentframe().f_locals
     return res
 
 
@@ -79,11 +78,13 @@ def makeWebhookResult(data):
 #    if results is None:
 #        return {}
 
-#    if (data.has('revenue')){
-    revenue = data.getString('revenue')        
-#    }
-    if revenue is None:
-        return {}
+    if data.has('revenue'){
+        revenue = data.getString('revenue')        
+        if revenue is None:
+            return {}
+    }
+    
+    revenue = "5"
     date = data.get('release_date')
     if date is None:
         return {}
@@ -95,10 +96,7 @@ def makeWebhookResult(data):
     date = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%m/%d/%Y')
 #    if date is None:
 #        return {}
-#        
-#    title = results.get('title')
-#    if title is None:
-#        return {}
+
        
     speech = "The movie " + title + " revenue is " + revenue 
     print("Response:")
