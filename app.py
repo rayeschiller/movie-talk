@@ -45,9 +45,9 @@ def processRequest(req):
         return {}
       
 #   search url
-    baseurl = "https://api.themoviedb.org/3/search/movie?api_key=9fe2fdf8fcbeeb11ecec17e5e4f0276a&query=Jack+Reacher"
+#    baseurl = "https://api.themoviedb.org/3/search/movie?api_key=9fe2fdf8fcbeeb11ecec17e5e4f0276a&query=Jack+Reacher"
 #   movie database url    
-#    baseurl="https://api.themoviedb.org/3/movie/550?api_key=9fe2fdf8fcbeeb11ecec17e5e4f0276a"
+    baseurl="https://api.themoviedb.org/3/movie/550?api_key=9fe2fdf8fcbeeb11ecec17e5e4f0276a"
     #   yql_query = makeYqlQuery(req)
     #   if yql_query is None:
     #       return {}
@@ -71,24 +71,23 @@ def makeYqlQuery(req):
     return title
 
 """
-    notes: For some reason, release_date, title, and tagline fields work but 
-    popularity, budget, revenue do not. 
+    notes: For some reason, release_date, title, and tagline fields are pulled successfully
+    but popularity, budget, revenue are not.
 """
 def makeWebhookResult(data):
-    results = data.get('results')
-    if results is None:
-        return {}
+#    results = data.getString('results')
+#    if results is None:
+#        return {}
 
-    movieID = results.get('id')
-#    date = data.get('release_date')
-#    if date is None:
-#        return {}
-#    title = data.get('title')
-#    if title is None:
-#        return {}
-#     
+    date = data.get('release_date')
+    if date is None:
+        return {}
+    title = data.get('title')
+    if title is None:
+        return {}
+     
 #    date = results.get('release_date')
-#    date = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%m/%d/%Y')
+    date = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%m/%d/%Y')
 #    if date is None:
 #        return {}
 #        
@@ -96,9 +95,7 @@ def makeWebhookResult(data):
 #    if title is None:
 #        return {}
        
-#       
-#     speech = "The movie " + da + " was released on " + date
-    speech = "The movie id: " + movieID
+    speech = "The movie " + title + "came out on " + date
     print("Response:")
     print(speech)
     
