@@ -81,9 +81,10 @@ def makeWebhookResult(data):
 #    title = data.getString('title')
 #    if title is None:
 #        return {}
-    revenue = data.get('revenue')
-    if revenue is None:
-        return {}
+#    revenue = data.getInteger('revenue')
+#    if revenue is None:
+#        return {}
+    revenue = 5
 #    movieID = data['results'][0]['id']
     speech = "The movie " + revenue
     print("Response:")
