@@ -44,16 +44,16 @@ def processRequest(req):
         return {}
       
 #   search url
-#    baseurl = "https://api.themoviedb.org/3/search/movie?api_key=9fe2fdf8fcbeeb11ecec17e5e4f0276a&query=Jack+Reacher"
+    baseurl = "https://api.themoviedb.org/3/search/movie?api_key=9fe2fdf8fcbeeb11ecec17e5e4f0276a&query="
 #   movie database url    
-    baseurl="https://api.themoviedb.org/3/movie/550?api_key=9fe2fdf8fcbeeb11ecec17e5e4f0276a"
-    #   yql_query = makeYqlQuery(req)
-    #   if yql_query is None:
-    #       return {}
-    #   yql_url = baseurl + yql_query
-    #   print(yql_url)
-    print(baseurl)   
-    result = urlopen(baseurl).read()
+#    baseurl="https://api.themoviedb.org/3/movie/550?api_key=9fe2fdf8fcbeeb11ecec17e5e4f0276a"
+    yql_query = makeYqlQuery(req)
+    if yql_query is None:
+        return {}
+    yql_url = baseurl + yql_query
+    print(yql_url)
+     
+    result = urlopen(yql_url).read()
     data = json.loads(result)
     res = makeWebhookResult(data)
     return res
@@ -63,25 +63,28 @@ def makeYqlQuery(req):
     result = req.get("result")
     parameters = result.get("parameters")
     title = parameters.get("title")
-#    title = "anastasia"
     if title is None:
         return None
-    return title
+    #replace all spaces with +
+    sTitle,x,y = ""," ","+"
+    for char in title:
+        sTitle += y if char == x else char
+    return sTitle
 
 """
-    notes: For some reason, release_date, title, and tagline fields are pulled successfully
-    but popularity, budget, revenue are not.
+    notes: Integers need to be converted to strings
 """
 def makeWebhookResult(data):
-#   This section works
+#    title = data.get('title')
 #    date = data.get('release_date')
 #    if date is None:
 #        return {}
 #    date = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%m/%d/%Y')
-    revenue = str(data.get('revenue'))
+#    
+#    revenue = str(data.get('revenue'))
 
-#    movieID = data['results'][0]['id']
-    speech = "The movie " + str(revenue)
+    movieID = str(data['results'][0]['id'])
+    speech = "The movie id is " + movieID
     print("Response:")
     print(speech)
     
