@@ -88,10 +88,11 @@ def makeWebhookResult(data):
         return {}
     date = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%m/%d/%Y')
     
-    revenue = str(data.get('revenue'))
+    revenue = str(format(data.get('revenue'), ",d"))
+
 
     
-    speech = "The movie " + title + " came out on " + date + " and had a revenue of " + revenue 
+    speech = "The movie " + title + " came out on " + date + " and had a revenue of $" + revenue 
     print("Response:")
     print(speech)
     
