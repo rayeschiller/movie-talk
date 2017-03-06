@@ -97,7 +97,7 @@ def makeWebhookResult(data):
 #        return {}
 
        
-    speech = "The movie " + title + " revenue is " + revenue 
+    speech = "The movie " + title + " revenue is " + date 
     print("Response:")
     print(speech)
     
