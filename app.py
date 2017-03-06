@@ -43,18 +43,25 @@ def processRequest(req):
     if req.get("result").get("action") != "movieReleaseDate":
         return {}
       
-#   search url
+#   base url for initial user query 
     baseurl = "https://api.themoviedb.org/3/search/movie?api_key=9fe2fdf8fcbeeb11ecec17e5e4f0276a&query="
-#   movie database url    
-#    baseurl="https://api.themoviedb.org/3/movie/550?api_key=9fe2fdf8fcbeeb11ecec17e5e4f0276a"
+#   Grabs paramter from user intent    
     yql_query = makeYqlQuery(req)
     if yql_query is None:
         return {}
+#   Adds user search query to base url and grabs movie ID
     yql_url = baseurl + yql_query
-    print(yql_url)
-     
+    print(yql_url) 
     result = urlopen(yql_url).read()
     data = json.loads(result)
+    movieID = str(data['results'][0]['id'])
+    
+#   Use movie ID in new link to query more details
+    idurl = "https://api.themoviedb.org/3/movie/" + movieID + "?api_key=9fe2fdf8fcbeeb11ecec17e5e4f0276a"
+    result = urlopen(idurl).read()
+    data = json.loads(result)    
+
+#   Call function to grab data
     res = makeWebhookResult(data)
     return res
 
@@ -75,16 +82,16 @@ def makeYqlQuery(req):
     notes: Integers need to be converted to strings
 """
 def makeWebhookResult(data):
-#    title = data.get('title')
-#    date = data.get('release_date')
-#    if date is None:
-#        return {}
-#    date = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%m/%d/%Y')
-#    
-#    revenue = str(data.get('revenue'))
+    title = data.get('title')
+    date = data.get('release_date')
+    if date is None:
+        return {}
+    date = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%m/%d/%Y')
+    
+    revenue = str(data.get('revenue'))
 
-    movieID = str(data['results'][0]['id'])
-    speech = "The movie id is " + movieID
+    
+    speech = "The movie " + title + " came out on " + date + " and had a revenue of " + revenue 
     print("Response:")
     print(speech)
     
