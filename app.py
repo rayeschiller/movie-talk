@@ -40,14 +40,13 @@ def webhook():
 
 
 def processRequest(req):
-    global local_vars
     if req.get("result").get("action") != "movieReleaseDate":
         return {}
       
 #   search url
-    baseurl = "https://api.themoviedb.org/3/search/movie?api_key=9fe2fdf8fcbeeb11ecec17e5e4f0276a&query=Jack+Reacher"
+#    baseurl = "https://api.themoviedb.org/3/search/movie?api_key=9fe2fdf8fcbeeb11ecec17e5e4f0276a&query=Jack+Reacher"
 #   movie database url    
-#    baseurl="https://api.themoviedb.org/3/movie/550?api_key=9fe2fdf8fcbeeb11ecec17e5e4f0276a"
+    baseurl="https://api.themoviedb.org/3/movie/550?api_key=9fe2fdf8fcbeeb11ecec17e5e4f0276a"
     #   yql_query = makeYqlQuery(req)
     #   if yql_query is None:
     #       return {}
@@ -82,10 +81,11 @@ def makeWebhookResult(data):
 #    title = data.getString('title')
 #    if title is None:
 #        return {}
-
-
-    movieID = data['results'][0]['id']
-    speech = "The movie " + movieID
+    revenue = data.get('revenue')
+    if revenue is None:
+        return {}
+#    movieID = data['results'][0]['id']
+    speech = "The movie " + revenue
     print("Response:")
     print(speech)
     
