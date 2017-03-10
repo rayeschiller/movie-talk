@@ -93,7 +93,6 @@ def makeWebhookResult(data, req):
     date = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%m/%d/%Y')
     revenue = format(data.get('revenue'), ",d")
     runtime = '{:02d}:{:02d}'.format(*divmod(data.get('runtime'), 60))
-    '02 hours and 15 minutes'
 
     if (intent == "revenue"):
         speech = "The revenue of " + title + " was $" + revenue
