@@ -93,16 +93,16 @@ def makeWebhookResult(data, req):
     date = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%m/%d/%Y')
     revenue = format(data.get('revenue'), ",d")
     runtime = '{:02d}:{:02d}'.format(*divmod(data.get('runtime'), 60))
-    '02:15'
+    '02 hours and 15 minutes'
 
     if (intent == "revenue"):
-        speech = "The revenue of " + title + " was " + revenue
+        speech = "The revenue of " + title + " was $" + revenue
     elif (intent == "release-time"):
         speech = title + " was released on " + date
     elif (intent == "budget"):
-        speech = "The movie " + title + " had a budget of " + budget
+        speech = "The movie " + title + " had a budget of $" + budget
     elif (intent == "runtime"):
-        speech = "The movie" + title + " has a runtime of " + runtime
+        speech = "The movie " + title + " has a runtime of " + runtime
     
 #    speech = "The movie " + title + " came out on " + date + " and had a revenue of $" + revenue 
     print("Response:")
