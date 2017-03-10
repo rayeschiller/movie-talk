@@ -102,7 +102,7 @@ def makeWebhookResult(data, req):
     elif (intent == "budget"):
         speech = "The movie " + title + " had a budget of " + budget
     elif (intent == "runtime"):
-        speech == "The movie" + title + " has a runtime of " + runtime
+        speech = "The movie" + title + " has a runtime of " + runtime
     
 #    speech = "The movie " + title + " came out on " + date + " and had a revenue of $" + revenue 
     print("Response:")
