@@ -86,7 +86,7 @@ def makeWebhookResult(data, req):
     metadata = result.get("metadata")
     intent = metadata.get("intentName")
     
-    #Getting fields from JSON data
+    #Getting fields from JSON data    
     title = data.get('title')
     budget = format(data.get('budget'),",d")
     date = data.get('release_date')
@@ -95,7 +95,10 @@ def makeWebhookResult(data, req):
     runtime = '{:02d}:{:02d}'.format(*divmod(data.get('runtime'), 60))
     '02:15'
 
-    speech = "The intent was " + intent
+    if (intent == "revenue"):
+        speech = "The revenue of " + title + " was " + revenue
+    elif (intent == "release-time"):
+        speech = title + " was released on " + date
 #    speech = "The movie " + title + " came out on " + date + " and had a revenue of $" + revenue 
     print("Response:")
     print(speech)
