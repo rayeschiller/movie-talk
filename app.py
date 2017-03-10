@@ -40,7 +40,7 @@ def webhook():
 
 
 def processRequest(req):
-    if req.get("result").get("action") != "movieReleaseDate":
+    if req.get("result").get("action") != "movieData":
         return {}
       
 #   base url for initial user query 
@@ -62,7 +62,7 @@ def processRequest(req):
     data = json.loads(result)    
 
 #   Call function to grab data
-    res = makeWebhookResult(data)
+    res = makeWebhookResult(data, req)
     return res
 
 
@@ -81,25 +81,29 @@ def makeYqlQuery(req):
 """
     notes: Integers need to be converted to strings
 """
-def makeWebhookResult(data):
+def makeWebhookResult(data, req):
+    result = req.get("result")
+    metadata = result.get("metadata")
+    intent = metadata.get("intentName")
+    
+    #Getting fields from JSON data
     title = data.get('title')
+    budget = format(data.get('budget'),",d")
     date = data.get('release_date')
-    if date is None:
-        return {}
     date = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%m/%d/%Y')
-    
-    revenue = str(format(data.get('revenue'), ",d"))
+    revenue = format(data.get('revenue'), ",d")
+    runtime = '{:02d}:{:02d}'.format(*divmod(data.get('runtime'), 60))
+    '02:15'
 
-
-    
-    speech = "The movie " + title + " came out on " + date + " and had a revenue of $" + revenue 
+    speech = "The intent was " + intent
+#    speech = "The movie " + title + " came out on " + date + " and had a revenue of $" + revenue 
     print("Response:")
     print(speech)
     
     return {
        "speech": speech,
        "displayText": speech,
-       "data": ["revenue", data.get('revenue'), "budget", data.get('budget'), "popularity", data.get('popularity')],
+       "data": [],
        "contextOut": [],
        "source": "apiai-movie-db"
     }
