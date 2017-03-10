@@ -88,7 +88,7 @@ def makeWebhookResult(data, req):
     
     #Getting fields from JSON data    
     title = data.get('title')
-    budget = format(data.get('budget'),",d")
+    budget = str(format(data.get('budget'),",d"))
     date = data.get('release_date')
     date = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%m/%d/%Y')
     revenue = format(data.get('revenue'), ",d")
@@ -111,7 +111,7 @@ def makeWebhookResult(data, req):
     return {
        "speech": speech,
        "displayText": speech,
-       "data": [],
+       "data": [budget, runtime],
        "contextOut": [],
        "source": "apiai-movie-db"
     }
