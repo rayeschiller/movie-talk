@@ -11,8 +11,7 @@ from urllib.error import HTTPError
 import json
 import os
 import datetime
-import logging
-import inspect
+import unicodedata
 
 local_vars ={}
 
@@ -104,7 +103,7 @@ def makeWebhookResult(data, creditsData, req):
     cast = creditsData.get('cast')
     count=0
     for d in cast:
-      name = d.get("name").encode('utf-8')
+      name = unicodedata.normalize('NFD', d.get("name")).encode('ascii', 'ignore')
       castNames.append(name)
       count+=1
       if(count >= 4):
