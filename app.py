@@ -104,11 +104,12 @@ def makeWebhookResult(data, creditsData, req):
     cast = creditsData.get('cast')
     count=0
     for d in cast:
-      castNames.append(d.get("name"))
+      castNames.append(str(d.get("name")))
       count+=1
       if(count >= 4):
           break
-    castNames = ', '.join(castNames)
+#    Formatting changes for output
+    castNames = '{} and {}'.format(', '.join(castNames[:-1]), castNames[-1])
         
     #Getting fields from JSON  movie data    
     title = data.get('title')
