@@ -104,7 +104,8 @@ def makeWebhookResult(data, creditsData, req):
     cast = creditsData.get('cast')
     count=0
     for d in cast:
-      castNames.append(str(d.get("name")))
+      name = d.get("name").encode('utf-8')
+      castNames.append(name)
       count+=1
       if(count >= 4):
           break
