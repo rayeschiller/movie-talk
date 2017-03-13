@@ -113,7 +113,7 @@ def makeWebhookResult(data, creditsData, req):
     castNames = '{} and {}'.format(', '.join(castNames[:-1]), castNames[-1])
     
 #Identifying actor from character
-    character = parameters.get('movie-character')
+    character = parameters.get('movie-character').title()
     for d in cast:
         for key in d:
             if d[key] == character:
