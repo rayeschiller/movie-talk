@@ -92,12 +92,25 @@ def makeWebhookResult(data, creditsData, req):
     intent = metadata.get("intentName")
     
     #Getting fields from credit data
+#    director
     crew = creditsData.get('crew')
     for d in crew:
         for key in d:
             if d[key] == 'Director':
                director = d.get("name")
-    #Getting fields from JSON data    
+
+#   Main cast names    
+    castNames= []
+    cast = creditsData.get('cast')
+    count=0
+    for d in cast:
+      castNames.append(d.get("name"))
+      count+=1
+      if(count >= 4):
+          break
+    castNames = ', '.join(castNames)
+        
+    #Getting fields from JSON  movie data    
     title = data.get('title')
     budget = str(format(data.get('budget'),",d"))
     date = data.get('release_date')
@@ -115,6 +128,9 @@ def makeWebhookResult(data, creditsData, req):
         speech = "The movie " + title + " has a runtime of " + runtime
     elif(intent == 'director'):
         speech = "The director of " + title + " was " + director
+    elif(intent == 'cast'):
+        speech = "The main cast of " + title + " is " + castNames
+    
 
     print("Response:")
     print(speech)
