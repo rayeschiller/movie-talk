@@ -89,8 +89,9 @@ def makeWebhookResult(data, creditsData, req):
     result = req.get("result")
     metadata = result.get("metadata")
     intent = metadata.get("intentName")
-    
-    #Getting fields from credit data
+    parameters = result.get("parameters")
+        
+#Getting fields from credit data
 #    director
     crew = creditsData.get('crew')
     for d in crew:
@@ -108,10 +109,17 @@ def makeWebhookResult(data, creditsData, req):
       count+=1
       if(count >= 4):
           break
-#    Formatting changes for output
+    #  Formatting changes
     castNames = '{} and {}'.format(', '.join(castNames[:-1]), castNames[-1])
-        
-    #Getting fields from JSON  movie data    
+    
+#Identifying actor from character
+    character = parameters.get('movie-character')
+    for d in cast:
+        for key in d:
+            if d[key] == character:
+                actor = d.get('name')
+                
+#Getting fields from JSON  movie data    
     title = data.get('title')
     budget = str(format(data.get('budget'),",d"))
     date = data.get('release_date')
@@ -119,6 +127,7 @@ def makeWebhookResult(data, creditsData, req):
     revenue = format(data.get('revenue'), ",d")
     runtime = '{:d} hours and {:d} minutes'.format(*divmod(data.get('runtime'), 60))
 
+#Speech outputs
     if (intent == "revenue"):
         speech = "The revenue of " + title + " was $" + revenue
     elif (intent == "release-time"):
@@ -131,7 +140,8 @@ def makeWebhookResult(data, creditsData, req):
         speech = "The director of " + title + " was " + director
     elif(intent == 'cast'):
         speech = "The main cast of " + title + " is " + castNames
-    
+    elif(intent=='identify-actor'):
+        speech = "The character " + character + " is played by " + actor
 
     print("Response:")
     print(speech)
