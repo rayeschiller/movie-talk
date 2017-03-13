@@ -58,11 +58,16 @@ def processRequest(req):
     
 #   Use movie ID in new link to query more details
     idurl = "https://api.themoviedb.org/3/movie/" + movieID + "?api_key=9fe2fdf8fcbeeb11ecec17e5e4f0276a"
+    creditsurl = "https://api.themoviedb.org/3/movie/" + movieID + "/credits?api_key=9fe2fdf8fcbeeb11ecec17e5e4f0276a"
+    
+    creditsResult = urlopen(creditsurl).read()
+    creditsData = json.loads(creditsResult)
+    
     result = urlopen(idurl).read()
     data = json.loads(result)    
 
 #   Call function to grab data
-    res = makeWebhookResult(data, req)
+    res = makeWebhookResult(data, creditsData, req)
     return res
 
 
@@ -81,11 +86,17 @@ def makeYqlQuery(req):
 """
     notes: Integers need to be converted to strings
 """
-def makeWebhookResult(data, req):
+def makeWebhookResult(data, creditsData, req):
     result = req.get("result")
     metadata = result.get("metadata")
     intent = metadata.get("intentName")
     
+    #Getting fields from credit data
+    crew = creditsData.get('crew')
+    for d in crew:
+        for key in d:
+            if d[key] == 'Director':
+               director = d.get("name")
     #Getting fields from JSON data    
     title = data.get('title')
     budget = str(format(data.get('budget'),",d"))
@@ -102,8 +113,9 @@ def makeWebhookResult(data, req):
         speech = "The movie " + title + " had a budget of $" + budget
     elif (intent == "runtime"):
         speech = "The movie " + title + " has a runtime of " + runtime
-    
-#    speech = "The movie " + title + " came out on " + date + " and had a revenue of $" + revenue 
+    elif(intent == 'director'):
+        speech = "The director of " + title + " was " + director
+
     print("Response:")
     print(speech)
     
