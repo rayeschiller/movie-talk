@@ -120,7 +120,7 @@ def makeWebhookResult(data, creditsData, req):
                 actor = d.get('name')
                 
 #Getting fields from JSON  movie data    
-    mTitle = data.get('title')
+    mTitle = data.get('title').lower()
     budget = str(format(data.get('budget'),",d"))
     date = data.get('release_date')
     date = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%m/%d/%Y')
