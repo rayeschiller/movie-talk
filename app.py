@@ -90,7 +90,8 @@ def makeWebhookResult(data, creditsData, req):
     metadata = result.get("metadata")
     intent = metadata.get("intentName")
     parameters = result.get("parameters")
-        
+    char = parameters.get('movie-character')
+    char = char.title()
 #Getting fields from credit data
 #    director
     crew = creditsData.get('crew')
@@ -104,23 +105,23 @@ def makeWebhookResult(data, creditsData, req):
     cast = creditsData.get('cast')
     count=0
     for d in cast:
+      #     gets rid of accents in characters otherwise throws error
       name = unicodedata.normalize('NFD', d.get("name")).encode('ascii', 'ignore')
       castNames.append(name)
       count+=1
-      if(count >= 4):
+      if(count >= 4): #only grabs first four cast names (main cast)
           break
-    #  Formatting changes
+    #    formatting to be list of words with and before last word
     castNames = '{} and {}'.format(', '.join(castNames[:-1]), castNames[-1])
     
 #Identifying actor from character
-    character = parameters.get('movie-character')
     for d in cast:
         for key in d:
-            if d[key] == character:
+            if d[key] == 'Allie Hamilton':
                 actor = d.get('name')
                 
 #Getting fields from JSON  movie data    
-    mTitle = data.get('title').lower()
+    mTitle = data.get('title')
     budget = str(format(data.get('budget'),",d"))
     date = data.get('release_date')
     date = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%m/%d/%Y')
@@ -140,9 +141,9 @@ def makeWebhookResult(data, creditsData, req):
     elif(intent == 'director'):
         speech = "The director of " + mTitle + " was " + director
     elif(intent == 'cast'):
-        speech = "The main cast of " + mTitle.title() + " is " + castNames
+        speech = "The main cast of " + mTitle + " is " + castNames
     elif(intent=='identify-actor'):
-        speech = character + " is played by " + actor
+        speech = char + " is played by " + actor
 
     print("Response:")
     print(speech)
@@ -150,7 +151,7 @@ def makeWebhookResult(data, creditsData, req):
     return {
        "speech": speech,
        "displayText": speech,
-       "data": [character, actor],
+       "data": [char, actor],
        "contextOut": [],
        "source": "apiai-movie-db"
     }
