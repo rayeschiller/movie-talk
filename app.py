@@ -116,7 +116,7 @@ def makeWebhookResult(data, creditsData, req):
     character = str(parameters.get('movie-character'))
     for d in cast:
         for key in d:
-            if d[key] == character.title():
+            if d[key] == character:
                 actor = d.get('name')
                 
 #Getting fields from JSON  movie data    
