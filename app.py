@@ -113,7 +113,7 @@ def makeWebhookResult(data, creditsData, req):
     castNames = '{} and {}'.format(', '.join(castNames[:-1]), castNames[-1])
     
 #Identifying actor from character
-    character = parameters.get('movie-character')
+    character = str(parameters.get('movie-character'))
     for d in cast:
         for key in d:
             if d[key] == character.title():
@@ -131,6 +131,7 @@ def makeWebhookResult(data, creditsData, req):
     if (intent == "revenue"):
         speech = "The revenue of " + mTitle + " was $" + revenue
     elif (intent == "release-time"):
+#        TODO: edit speech depending on past, future dates
         speech = mTitle + " was released on " + date
     elif (intent == "budget"):
         speech = "The movie " + mTitle + " had a budget of $" + budget
