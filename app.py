@@ -113,11 +113,12 @@ def makeWebhookResult(data, creditsData, req):
     castNames = '{} and {}'.format(', '.join(castNames[:-1]), castNames[-1])
     
 #Identifying actor from character
-#    character = parameters.get('movie-character').title()
-#    for d in cast:
-#        for key in d:
-#            if d[key] == character:
-#                actor = d.get('name')
+    actor = "test"
+    character = parameters.get('movie-character')
+    for d in cast:
+        for key in d:
+            if d[key] == character:
+                actor = d.get('name')
                 
 #Getting fields from JSON  movie data    
     title = data.get('title')
@@ -140,8 +141,8 @@ def makeWebhookResult(data, creditsData, req):
         speech = "The director of " + title + " was " + director
     elif(intent == 'cast'):
         speech = "The main cast of " + title + " is " + castNames
-#    elif(intent=='identify-actor'):
-#        speech = character + " is played by " + actor
+    elif(intent=='identify-actor'):
+        speech = character + " is played by " + actor
 
     print("Response:")
     print(speech)
@@ -149,7 +150,7 @@ def makeWebhookResult(data, creditsData, req):
     return {
        "speech": speech,
        "displayText": speech,
-       "data": [title, revenue, budget, runtime, director, castNames],
+       "data": [character, actor],
        "contextOut": [],
        "source": "apiai-movie-db"
     }
