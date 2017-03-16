@@ -140,7 +140,7 @@ def makeWebhookResult(data, creditsData, req):
     elif(intent == 'director'):
         speech = "The director of " + mTitle + " was " + director
     elif(intent == 'cast'):
-        speech = "The main cast of " + mTitle + " is " + castNames
+        speech = "The main cast of " + mTitle.title() + " is " + castNames
     elif(intent=='identify-actor'):
         speech = character + " is played by " + actor
 
