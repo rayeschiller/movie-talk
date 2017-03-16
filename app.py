@@ -93,14 +93,14 @@ def makeWebhookResult(data, creditsData, req):
    
 
 #Getting fields from credit data
-#    director
+    #    director
     crew = creditsData.get('crew')
     for d in crew:
         for key in d:
             if d[key] == 'Director':
                director = d.get("name")
 
-#   Main cast names    
+    #   Main cast names    
     castNames= []
     cast = creditsData.get('cast')
     count=0
@@ -114,14 +114,14 @@ def makeWebhookResult(data, creditsData, req):
     #    formatting to be list of words with and before last word
     castNames = '{} and {}'.format(', '.join(castNames[:-1]), castNames[-1])
     
-#Identifying actor from character
+    #Identifying actor from character
     character = parameters.get('movie-character')
     for d in cast:
         for key in d:
             if d[key] == character:
                 actor = d.get('name')
                 
-#Getting fields from JSON  movie data    
+ #Getting fields from movie data    
     mTitle = data.get('title')
     budget = str(format(data.get('budget'),",d"))
     date = data.get('release_date')
@@ -152,7 +152,7 @@ def makeWebhookResult(data, creditsData, req):
     return {
        "speech": speech,
        "displayText": speech,
-       "data": [char, actor],
+       "data": [character, actor],
        "contextOut": [],
        "source": "apiai-movie-db"
     }
