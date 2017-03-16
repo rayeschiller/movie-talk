@@ -113,8 +113,7 @@ def makeWebhookResult(data, creditsData, req):
     castNames = '{} and {}'.format(', '.join(castNames[:-1]), castNames[-1])
     
 #Identifying actor from character
-    character = parameters.get('movie-character')
-    actor = ""
+    character = parameters.get('movie-character').title()
     for d in cast:
         for key in d:
             if d[key] == character:
@@ -142,7 +141,7 @@ def makeWebhookResult(data, creditsData, req):
     elif(intent == 'cast'):
         speech = "The main cast of " + title + " is " + castNames
     elif(intent=='identify-actor'):
-        speech = "The character " + character + " is played by " + actor
+        speech = character + " is played by " + actor
 
     print("Response:")
     print(speech)
