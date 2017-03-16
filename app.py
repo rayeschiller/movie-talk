@@ -73,12 +73,12 @@ def processRequest(req):
 def makeYqlQuery(req):
     result = req.get("result")
     parameters = result.get("parameters")
-    title = parameters.get("title")
-    if title is None:
+    mTitle = parameters.get("title")
+    if mTitle is None:
         return None
     #replace all spaces with +
     sTitle,x,y = ""," ","+"
-    for char in title:
+    for char in mTitle:
         sTitle += y if char == x else char
     return sTitle
 
@@ -113,15 +113,14 @@ def makeWebhookResult(data, creditsData, req):
     castNames = '{} and {}'.format(', '.join(castNames[:-1]), castNames[-1])
     
 #Identifying actor from character
-    actor = "test"
-    character = parameters.get('movie-character')
+    character = parameters.get('movie-character').title()
     for d in cast:
         for key in d:
             if d[key] == character:
                 actor = d.get('name')
                 
 #Getting fields from JSON  movie data    
-    title = data.get('title')
+    mTitle = data.get('title')
     budget = str(format(data.get('budget'),",d"))
     date = data.get('release_date')
     date = datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%m/%d/%Y')
@@ -130,17 +129,17 @@ def makeWebhookResult(data, creditsData, req):
 
 #Speech outputs
     if (intent == "revenue"):
-        speech = "The revenue of " + title + " was $" + revenue
+        speech = "The revenue of " + mTitle + " was $" + revenue
     elif (intent == "release-time"):
-        speech = title + " was released on " + date
+        speech = mTitle + " was released on " + date
     elif (intent == "budget"):
-        speech = "The movie " + title + " had a budget of $" + budget
+        speech = "The movie " + mTitle + " had a budget of $" + budget
     elif (intent == "runtime"):
-        speech = "The movie " + title + " has a runtime of " + runtime
+        speech = "The movie " + mTitle + " has a runtime of " + runtime
     elif(intent == 'director'):
-        speech = "The director of " + title + " was " + director
+        speech = "The director of " + mTitle + " was " + director
     elif(intent == 'cast'):
-        speech = "The main cast of " + title + " is " + castNames
+        speech = "The main cast of " + mTitle + " is " + castNames
     elif(intent=='identify-actor'):
         speech = character + " is played by " + actor
 
