@@ -149,7 +149,7 @@ def makeWebhookResult(data, creditsData, req):
     return {
        "speech": speech,
        "displayText": speech,
-       "data": [budget, runtime],
+       "data": [title, revenue, budget, runtime, director, castNames],
        "contextOut": [],
        "source": "apiai-movie-db"
     }
